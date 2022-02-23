@@ -10,7 +10,10 @@ from flask_apispec.extension import FlaskApiSpec
 from flask_apispec.views import MethodResource
 from flask_apispec import marshal_with, doc, use_kwargs
 
-root_folder = '/home/fs'
+try:
+    root_folder = os.environ['TFG_ROOT_FOLDER']
+except KeyError:
+    root_folder = f'{os.path.abspath(os.getcwd())}/../.docker/fs'
 
 file_plugin = MarshmallowPlugin()
 
@@ -106,7 +109,7 @@ docs.register(FileSystemStorageAPI)
 docs.register(FileSystemAPI)
 
 if __name__ == '__main__':
-    #if not os.path.isdir(root_folder):
-    #    os.mkdir(root_folder)
+    if not os.path.isdir(root_folder):
+        os.mkdir(root_folder)
 
     app.run(host='0.0.0.0', port=80)

@@ -2,15 +2,43 @@ version: '3.9'
 
 services:
 
+  redis:
+    container_name: redis
+    hostname: redis
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./.docker/redis:/data
+    networks:
+      - tfg-network
+
+  rabbitmq:
+    container_name: rabbitmq
+    hostname: rabbitmq
+    image: rabbitmq:management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - ./.docker/rabbitmq/data:/var/lib/rabbitmq
+      - ./.docker/rabbitmq/log:/var/log/rabbitmq
+    networks:
+      - tfg-network
+
   fs:
-    container_name: tfg-fs
+    container_name: fs
     hostname: fs
     build:
       context: ./file-stograge-service
     ports:
-      - 9000:80
+      - "9000:80"
     volumes:
       - ./.docker/fs:/home/fs
+    environment:
+      - TFG_ROOT_FOLDER=/home/fs
+    networks:
+      - tfg-network
 
 
 networks:

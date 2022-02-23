@@ -2,6 +2,8 @@ FROM continuumio/miniconda3:4.10.3-alpine
 
 WORKDIR /app
 
+ENV TFG_ROOT_FOLDER=/home/fs
+
 # crate conda environment from yaml file
 COPY ./environment.yml .
 RUN conda install -c conda-forge flask-restful --yes
