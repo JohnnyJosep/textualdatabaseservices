@@ -51,6 +51,17 @@ services:
     networks:
       - tfg-network
 
+  ocr-tesseract:
+    container_name: ocr-tesseract
+    hostname: ocr-tesseract
+    build:
+      context: ./ocr-tesseract-service
+    ports:
+      - "9001:80"
+    networks:
+      - tfg-network
+
+
   dscd:
     depends_on:
       - fs

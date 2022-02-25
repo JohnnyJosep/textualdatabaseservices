@@ -1,0 +1,6 @@
+pytesseract
+flask
+flask-restful
+flask-apispec
+apispec
+marshmallow

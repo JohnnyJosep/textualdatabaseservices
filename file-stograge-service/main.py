@@ -34,13 +34,13 @@ class FileField(fields.Raw):
     pass
 
 
+class FileUploadResponseSchema(Schema):
+    filename = fields.String(default='')
+
+
 class HealthResponseSchema(Schema):
     success = fields.Boolean(default=True)
     message = fields.String(default='')
-
-
-class FileUploadResponseSchema(Schema):
-    filename = fields.String(default='')
 
 
 class HealthAPI(MethodResource, Resource):
