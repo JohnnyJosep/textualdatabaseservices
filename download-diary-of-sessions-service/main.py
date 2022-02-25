@@ -4,8 +4,8 @@ import json
 import redis
 import os
 
-legislature = int(os.environ['TFG_LEGISLATURE']) if 'TFG_LEGISLATURE' in os.environ else 14
-url = os.environ['TFG_URL'] if 'TFG_URL' in os.environ else f'https://www.congreso.es/public_oficiales/L14/CONG/DS/PL/DSCD-14-PL-'
+legislature = 14
+url = os.environ['TFG_URL'] if 'TFG_URL' in os.environ else 'https://www.congreso.es/public_oficiales/L14/CONG/DS/PL/DSCD-14-PL-'
 file_type = os.environ['TFG_FILE_TYPE'] if 'TFG_FILE_TYPE' in os.environ else 'dscd'
 redis_host = os.environ['TFG_REDIS'] if 'TFG_REDIS' in os.environ else '127.0.0.1'
 fs_url = os.environ['TFG_FS_URL'] if 'TFG_FS_URL' in os.environ else 'http://localhost:9000/fs'
@@ -29,7 +29,7 @@ def download(plenary):
     upload_response = requests.post(fs_url, files=[('file',  ('test.pdf', file))])
 
     fs_response = json.loads(upload_response.content.decode('utf8'))
-    r.set(f'{file_type}-{legislature:02d}-{plenary:02d}.pdf', fs_response['filename'])
+    r.set(f'{file_type}-{legislature:02d}-{plenary:03d}.pdf', fs_response['filename'])
     # TODO: Add to rabbitmq
     return True
 

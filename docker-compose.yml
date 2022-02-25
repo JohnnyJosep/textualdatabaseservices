@@ -26,6 +26,17 @@ services:
     networks:
       - tfg-network
 
+  freeling:
+    container_name: freeling
+    hostname: freeling
+    build:
+      context: ./freeling
+    command: analyze -f es.cfg --server -p 50005
+    ports:
+      - "50005:50005"
+    networks:
+      - tfg-network
+
   fs:
     container_name: fs
     hostname: fs
@@ -37,6 +48,40 @@ services:
       - ./.docker/fs:/home/fs
     environment:
       - TFG_ROOT_FOLDER=/home/fs
+    networks:
+      - tfg-network
+
+  dscd:
+    depends_on:
+      - fs
+      - redis
+      - rabbitmq
+    container_name: dscd
+    hostname: dscd
+    build:
+      context: ./download-diary-of-sessions-service
+    environment:
+      - TFG_URL=https://www.congreso.es/public_oficiales/L14/CONG/DS/PL/DSCD-14-PL-
+      - TFG_FILE_TYPE=dscd
+      - TFG_REDIS=redis
+      - TFG_FS_URL=http://fs/fs
+    networks:
+      - tfg-network
+
+  dss:
+    depends_on:
+      - fs
+      - redis
+      - rabbitmq
+    container_name: dss
+    hostname: dss
+    build:
+      context: ./download-diary-of-sessions-service
+    environment:
+      - TFG_URL=https://www.senado.es/legis14/publicaciones/pdf/senado/ds/DS_C_14_
+      - TFG_FILE_TYPE=dss
+      - TFG_REDIS=redis
+      - TFG_FS_URL=http://fs/fs
     networks:
       - tfg-network
 

@@ -10,10 +10,7 @@ from flask_apispec.extension import FlaskApiSpec
 from flask_apispec.views import MethodResource
 from flask_apispec import marshal_with, doc, use_kwargs
 
-try:
-    root_folder = os.environ['TFG_ROOT_FOLDER']
-except KeyError:
-    root_folder = f'{os.path.abspath(os.getcwd())}/../.docker/fs'
+root_folder = os.environ['TFG_ROOT_FOLDER'] if 'TFG_ROOT_FOLDER' in os.environ else f'{os.path.abspath(os.getcwd())}/../.docker/fs'
 
 file_plugin = MarshmallowPlugin()
 
