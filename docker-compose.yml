@@ -1,6 +1,8 @@
 version: '3.9'
 
+
 services:
+
 
   redis:
     container_name: redis
@@ -60,7 +62,6 @@ services:
       - "9001:80"
     networks:
       - tfg-network
-
 
   dscd:
     depends_on:
