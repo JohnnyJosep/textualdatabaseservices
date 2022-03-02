@@ -4,3 +4,4 @@ flask-restful
 flask-apispec
 apispec
 marshmallow
+pdf2image
