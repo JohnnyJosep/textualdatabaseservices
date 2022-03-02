@@ -3,6 +3,7 @@
 ## Modules:
 - [ ] Freeling
 - [x] OCR-Tesseract 
+- [ ] Pdf to image 
 - [x] Redis
 - [ ] RabbitMQ 
 - [ ] ELK
