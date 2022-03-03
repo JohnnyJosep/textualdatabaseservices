@@ -114,9 +114,19 @@ class OcrTesseractPdfAPI(MethodResource, Resource):
 
         pdf_data = pdf.read()
         pages = convert_from_bytes(pdf_data)
+        
+        left = 175
+        top_header = 790
+        top = 296
+        right = 1480
+        bottom = 2160
 
-        pages_text = pytesseract.image_to_string(pages[0], lang='spa')
-        return {'pages': [pages_text]}, 200
+        header = pages[0].crop((left, top_header, right, bottom)) 
+        images = [page.crop((left, top, right, bottom)) for page in pages[1:]]
+        images.insert(0, header)
+
+        texts = [pytesseract.image_to_string(img, lang='spa') for img in images]
+        return {'pages': texts}, 200
 
 
 class HealthResponseSchema(Schema):
