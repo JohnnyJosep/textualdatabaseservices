@@ -77,6 +77,8 @@ services:
       - TFG_FILE_TYPE=dscd
       - TFG_REDIS=redis
       - TFG_FS_URL=http://fs/fs
+      - TFG_RABBITMQ_URL=rabbitmq
+      - TFG_RABBITMQ_DIARY_QUEUE=dscd
     networks:
       - tfg-network
 
@@ -94,6 +96,8 @@ services:
       - TFG_FILE_TYPE=dss
       - TFG_REDIS=redis
       - TFG_FS_URL=http://fs/fs
+      - TFG_RABBITMQ_URL=rabbitmq
+      - TFG_RABBITMQ_DIARY_QUEUE=dss
     networks:
       - tfg-network
 
