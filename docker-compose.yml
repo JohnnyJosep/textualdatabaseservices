@@ -101,6 +101,36 @@ services:
     networks:
       - tfg-network
 
+  dscd-ocr:
+    depends_on:
+      - fs
+      - redis
+      - rabbitmq
+      - ocr-tesseract
+    container_name: dscd-ocr
+    build:
+      context: ./receiver-diary-processing
+    environment:
+      - TFG_RABBITMQ_URL=rabbitmq
+      - TFG_RABBITMQ_DIARY_QUEUE=dscd
+    networks:
+      - tfg-network
+  
+  dss-ocr:
+    depends_on:
+      - fs
+      - redis
+      - rabbitmq
+      - ocr-tesseract
+    container_name: dss-ocr
+    build:
+      context: ./receiver-diary-processing
+    environment:
+      - TFG_RABBITMQ_URL=rabbitmq
+      - TFG_RABBITMQ_DIARY_QUEUE=dss
+    networks:
+      - tfg-network
+
 
 networks:
   tfg-network:
